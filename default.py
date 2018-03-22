@@ -47,7 +47,10 @@ def play():
     """
     LOG.debug('Full sys.argv received: %s', sys.argv)
     # Put the request into the 'queue'
-    utils.plex_command('PLAY', sys.argv[2])
+    if not sys.argv[2]:
+        utils.plex_command('NAVIGATE', sys.argv[0])
+    else:
+        utils.plex_command('PLAY', sys.argv[2])
     # Wait for the result
     while not pickler.pickl_window('plex_result'):
         xbmc.sleep(50)
