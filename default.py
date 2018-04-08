@@ -51,6 +51,9 @@ def play():
         utils.plex_command('NAVIGATE', sys.argv[0])
     else:
         utils.plex_command('PLAY', sys.argv[2])
+    if HANDLE == -1:
+        # Handle -1 received, not waiting for main thread
+        return
     # Wait for the result
     while not pickler.pickl_window('plex_result'):
         xbmc.sleep(50)
