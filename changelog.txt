@@ -1,0 +1,8 @@
+version 2.0.3
+- Also pass add-on handle to main thread
+
+version 2.0.2
+- Correctly handle direct plugin calls
+
+version 2.0.1
+- Fix widget navigating to entire TV show not working
