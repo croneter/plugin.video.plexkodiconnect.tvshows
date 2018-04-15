@@ -48,9 +48,11 @@ def play():
     LOG.debug('Full sys.argv received: %s', sys.argv)
     # Put the request into the 'queue'
     if not sys.argv[2]:
-        utils.plex_command('NAVIGATE', sys.argv[0])
+        request = '?mode=navigation&path=%s&handle=%s' % (sys.argv[0], HANDLE)
+        utils.plex_command('NAVIGATE', request)
     else:
-        utils.plex_command('PLAY', sys.argv[2])
+        request = '%s&handle=%s' % (sys.argv[2], HANDLE)
+        utils.plex_command('PLAY', request)
     if HANDLE == -1:
         # Handle -1 received, not waiting for main thread
         return
