@@ -1,5 +1,6 @@
 version 2.0.3
 - Also pass add-on handle to main thread
+- Change the way navigation to entire TV show folder works internally
 
 version 2.0.2
 - Correctly handle direct plugin calls
