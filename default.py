@@ -2,56 +2,33 @@
 # We need this in order to use add-on paths like
 # 'plugin://plugin.video.plexkodiconnect.MOVIES' in the Kodi video database
 ###############################################################################
-import logging
-import sys
-from os import path as os_path
-
+from __future__ import absolute_import, division, unicode_literals
+from logging import getLogger
+from sys import argv
 import xbmc
 import xbmcgui
-import xbmcaddon
 import xbmcplugin
 
-_ADDON = xbmcaddon.Addon(id='plugin.video.plexkodiconnect.tvshows')
-try:
-    _ADDON_PATH = _ADDON.getAddonInfo('path').decode('utf-8')
-except TypeError:
-    _ADDON_PATH = _ADDON.getAddonInfo('path').decode()
-try:
-    _BASE_RESOURCE = xbmc.translatePath(os_path.join(
-        _ADDON_PATH,
-        'resources',
-        'lib')).decode('utf-8')
-except TypeError:
-    _BASE_RESOURCE = xbmc.translatePath(os_path.join(
-        _ADDON_PATH,
-        'resources',
-        'lib')).decode()
-sys.path.append(_BASE_RESOURCE)
-
-###############################################################################
-import pickler
-import PKC_listitem
-import utils
-import loghandler
+from resources.lib import pickler, pkc_listitem, utils, loghandler
 ###############################################################################
 loghandler.config()
-LOG = logging.getLogger('PLEX.TVSHOWS')
+LOG = getLogger('PLEX.TVSHOWS')
 ###############################################################################
 
-HANDLE = int(sys.argv[1])
+HANDLE = int(argv[1])
 
 
 def play():
     """
     Start up playback_starter in main Python thread
     """
-    LOG.debug('Full sys.argv received: %s', sys.argv)
+    LOG.debug('Full sys.argv received: %s', argv)
     # Put the request into the 'queue'
-    if not sys.argv[2]:
-        request = '?mode=navigation&path=%s&handle=%s' % (sys.argv[0], HANDLE)
+    if not argv[2]:
+        request = '?mode=navigation&path=%s&handle=%s' % (argv[0], HANDLE)
         utils.plex_command('NAVIGATE', request)
     else:
-        request = '%s&handle=%s' % (sys.argv[2], HANDLE)
+        request = '%s&handle=%s' % (argv[2], HANDLE)
         utils.plex_command('PLAY', request)
     if HANDLE == -1:
         # Handle -1 received, not waiting for main thread
@@ -64,7 +41,7 @@ def play():
         LOG.error('Error encountered, aborting')
         xbmcplugin.setResolvedUrl(HANDLE, False, xbmcgui.ListItem())
     elif result.listitem:
-        listitem = PKC_listitem.convert_PKC_to_listitem(result.listitem)
+        listitem = pkc_listitem.convert_pkc_to_listitem(result.listitem)
         xbmcplugin.setResolvedUrl(HANDLE, True, listitem)
 
 
