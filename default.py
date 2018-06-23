@@ -9,7 +9,8 @@ import xbmc
 import xbmcgui
 import xbmcplugin
 
-from resources.lib import pickler, pkc_listitem, utils, loghandler
+from resources.lib import pickler, pkc_listitem, utils, loghandler, \
+    unicode_paths
 ###############################################################################
 loghandler.config()
 LOG = getLogger('PLEX.TVSHOWS')
@@ -25,10 +26,11 @@ def play():
     LOG.debug('Full sys.argv received: %s', argv)
     # Put the request into the 'queue'
     if not argv[2]:
-        request = '?mode=navigation&path=%s&handle=%s' % (argv[0], HANDLE)
+        request = ('?mode=navigation&path=%s&handle=%s'
+                   % (unicode_paths.decode(argv[0]), HANDLE))
         utils.plex_command('NAVIGATE', request)
     else:
-        request = '%s&handle=%s' % (argv[2], HANDLE)
+        request = '%s&handle=%s' % (unicode_paths.decode(argv[2]), HANDLE)
         utils.plex_command('PLAY', request)
     if HANDLE == -1:
         # Handle -1 received, not waiting for main thread
