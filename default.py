@@ -28,10 +28,10 @@ def play():
     if not argv[2]:
         request = ('?mode=navigation&path=%s&handle=%s'
                    % (unicode_paths.decode(argv[0]), HANDLE))
-        utils.plex_command('NAVIGATE', request)
+        utils.plex_command('NAVIGATE-%s' % request)
     else:
         request = '%s&handle=%s' % (unicode_paths.decode(argv[2]), HANDLE)
-        utils.plex_command('PLAY', request)
+        utils.plex_command('PLAY-%s' % request)
     if HANDLE == -1:
         # Handle -1 received, not waiting for main thread
         return
