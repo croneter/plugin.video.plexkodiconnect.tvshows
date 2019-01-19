@@ -26,9 +26,10 @@ def play():
     LOG.debug('Full sys.argv received: %s', argv)
     # Put the request into the 'queue'
     if not argv[2]:
-        request = ('?mode=navigation&path=%s&handle=%s'
-                   % (unicode_paths.decode(argv[0]), HANDLE))
-        utils.plex_command('NAVIGATE-%s' % request)
+        # Browsing to a tv show from a tv show info dialog - picked up
+        # by kodimonitor.py and its method OnAdd
+        xbmcplugin.setResolvedUrl(HANDLE, False, xbmcgui.ListItem())
+        return
     else:
         request = '%s&handle=%s' % (unicode_paths.decode(argv[2]), HANDLE)
         utils.plex_command('PLAY-%s' % request)
