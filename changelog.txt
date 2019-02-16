@@ -1,3 +1,9 @@
+version 2.0.10
+- Fix UnicodeDecodeError: 'ascii' codec can't decode
+
+version 2.0.9
+- Switch to JSON communication
+
 version 2.0.8
 - Fix browsing of tv shows from info page
 
