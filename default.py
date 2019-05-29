@@ -52,7 +52,7 @@ def play():
         LOG.error('Error encountered, aborting')
         xbmcplugin.setResolvedUrl(HANDLE, False, xbmcgui.ListItem())
     elif result is True:
-        pass
+        xbmcplugin.setResolvedUrl(HANDLE, False, xbmcgui.ListItem())
     else:
         xbmcplugin.setResolvedUrl(HANDLE, True, result)
 
